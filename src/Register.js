@@ -3,17 +3,26 @@ import './Register.css';
 class Register extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            email : "",
-            username : "",
-            password : "",
-            name: "",
-            address: "",
-            mobile:"",
-
-
-
-        }
+        this.props.user = {
+            email: "",
+            username: "",
+            password: "",
+            name: {
+                firstname: "",
+                lastname: "Potter"
+            },
+            address: {
+                "city": "kilcoole",
+                "street": "7835 new road",
+                "number": 3,
+                "zipcode": "12926-3874",
+                "geolocation": {
+                    "lat": "-37.3159",
+                    "long": "81.1496"
+                }
+            },
+            phone: "",
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -24,32 +33,13 @@ class Register extends React.Component {
     }
     handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
-            let res = await fetch('https://fakestoreapi.com/users',{
-                method:"POST",
-                body:JSON.stringify(
-                    {
-                        email:this.state.email,
-                        username:this.state.username,
-                        password:this.state.password,
-                        name:{
-                            firstname : this.state.name,
-                            lastname : '',
-                        address:{
-                        ity:'',
-                        street:this.state.address,
-                        number:'',
-                        zipcode:'',
-                        geolocation:{
-                            lat:'',
-                            long:''
-                            
-                        }
-                    },
-                        phone:this.state.mobile,
-                    }}
-                )
+            let res = await fetch('https://fakestoreapi.com/users', {
+                method: "POST",
+                body: JSON.stringify(this.state.user)
             })
+
             let resJson = await res.Json();
             if (res.status === 200) {
                 this.setState({ [e.target.name]: e.target.value })
@@ -70,29 +60,29 @@ class Register extends React.Component {
 
                     <table>
                         <div className="cols">
-                        <tr>
+                            <tr>
                                 <td> <label>Email</label></td>
-                                <td><input type="text" name="email"  onChange={this.handleChange} /></td>
+                                <td><input type="text" name="email" onChange={this.handleChange} /></td>
                             </tr>
                             <tr>
                                 <td> <label>Username</label></td>
-                                <td><input type="text" name="username"  onChange={this.handleChange} /></td>
+                                <td><input type="text" name="username" onChange={this.handleChange} /></td>
                             </tr>
                             <tr>
                                 <td> <label>Password</label></td>
-                                <td><input type="text" name="password"  onChange={this.handleChange} /></td>
+                                <td><input type="text" name="password" onChange={this.handleChange} /></td>
                             </tr>
                             <tr>
                                 <td> <label>Name</label></td>
-                                <td><input type="text" name="name"  onChange={this.handleChange} /></td>
+                                <td><input type="text" name="name.firstname" onChange={this.handleChange} /></td>
                             </tr>
                             <tr>
                                 <td><label>Address</label></td>
-                                <td><textarea name="address" onChange={this.handleChange} /></td>
+                                <td><textarea name="address.street" onChange={this.handleChange} /></td>
                             </tr>
                             <tr>
                                 <td><label>Mobile</label></td>
-                                <td><input type="text" name="mobile"  onChange={this.handleChange} /></td>
+                                <td><input type="text" name="phone" onChange={this.handleChange} /></td>
                             </tr>
 
                             <tr>
