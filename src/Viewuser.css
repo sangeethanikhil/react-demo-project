@@ -1,0 +1,10 @@
+.container{
+    background-color: grey;
+    height:300px;
+    box-sizing: border-box;
+    width:50%;
+    text-align: center;
+    padding-top: 10px;
+    margin: 0px auto;
+    clear: left;
+}
